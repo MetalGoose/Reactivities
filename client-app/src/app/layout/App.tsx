@@ -8,6 +8,7 @@ import { HomePage } from "../../features/home/HomePage";
 import NavBar from "../../features/nav/NavBar";
 import ActivityStore from '../stores/activityStore';
 import { LoadingComponent } from "./LoadingComponent";
+import { ActivityDetails } from "../../features/activities/details/ActivityDetails";
 
 const App = () => {
 
@@ -32,7 +33,8 @@ const App = () => {
       <NavBar/>
       <Container style={{ marginTop: "7em" }}>
         <Route exact path='/' component={HomePage}/>
-        <Route path='/activities' component={ActivityDashBoard}/>
+        <Route exact path='/activities' component={ActivityDashBoard}/>
+        <Route path='/activities/:id' component={ActivityDetails}/>
         <Route path='/createActivity' component={ActivityForm}/>
       </Container>
     </Fragment>

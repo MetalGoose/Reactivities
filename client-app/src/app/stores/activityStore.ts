@@ -47,6 +47,35 @@ class ActivityStore {
         //     .finally(() => this.loadingInitial = false); // finally - выполнится даже если промис будет не выполнен
     }
 
+    /**
+     * Устанавливает выбранную активность, получая ее из activityRegistry или с сервера
+     */
+    @action loadActivity = async (id: string) => {
+        let activity = this.getActivity(id);
+        if (activity) {
+            this.selectedActivity = activity;
+        } else {
+            this.loadingInitial = true;
+            try {
+                activity = await agent.Activities.details(id);
+                runInAction('getting activity', () => {
+                    this.selectedActivity = activity;
+                })
+            } catch (error) {
+                console.log(error);
+            } finally {
+                runInAction('getting activity finished', () => this.loadingInitial = false);
+            }
+        }
+    }
+
+    /**
+     * Возвращает активность с указанным id или undefined
+     */
+    getActivity = (id: string) : IActivity | undefined => {
+        return this.activityRegistry.get(id);
+    }
+
     @action createActivity = async (activity: IActivity) => {
         this.submitting = true;
         try {
