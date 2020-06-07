@@ -1,10 +1,13 @@
-import React, { useEffect, Fragment, useContext } from "react";
-import { Container } from "semantic-ui-react";
-import NavBar from "../../features/nav/NavBar";
-import { LoadingComponent } from "./LoadingComponent";
-import ActivityStore from '../stores/activityStore';
 import { observer } from "mobx-react-lite";
+import React, { Fragment, useContext, useEffect } from "react";
+import { Route } from "react-router-dom";
+import { Container } from "semantic-ui-react";
 import ActivityDashBoard from "../../features/activities/dashboard/ActivityDashBoard";
+import { ActivityForm } from "../../features/activities/form/ActivityForm";
+import { HomePage } from "../../features/home/HomePage";
+import NavBar from "../../features/nav/NavBar";
+import ActivityStore from '../stores/activityStore';
+import { LoadingComponent } from "./LoadingComponent";
 
 const App = () => {
 
@@ -28,7 +31,9 @@ const App = () => {
     <Fragment>
       <NavBar/>
       <Container style={{ marginTop: "7em" }}>
-        <ActivityDashBoard />
+        <Route exact path='/' component={HomePage}/>
+        <Route path='/activities' component={ActivityDashBoard}/>
+        <Route path='/createActivity' component={ActivityForm}/>
       </Container>
     </Fragment>
   );
