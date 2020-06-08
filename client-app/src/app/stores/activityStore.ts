@@ -55,8 +55,8 @@ class ActivityStore {
         if (activity) {
             this.selectedActivity = activity;
         } else {
-            this.loadingInitial = true;
             try {
+                this.loadingInitial = true;
                 activity = await agent.Activities.details(id);
                 runInAction('getting activity', () => {
                     this.selectedActivity = activity;
@@ -72,7 +72,7 @@ class ActivityStore {
     /**
      * Возвращает активность с указанным id или undefined
      */
-    getActivity = (id: string) : IActivity | undefined => {
+    getActivity = (id: string) => {
         return this.activityRegistry.get(id);
     }
 

@@ -3,12 +3,12 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import ActivityDashBoard from "../../features/activities/dashboard/ActivityDashBoard";
-import { ActivityForm } from "../../features/activities/form/ActivityForm";
+import ActivityForm from "../../features/activities/form/ActivityForm";
 import { HomePage } from "../../features/home/HomePage";
 import NavBar from "../../features/nav/NavBar";
 import ActivityStore from '../stores/activityStore';
 import { LoadingComponent } from "./LoadingComponent";
-import { ActivityDetails } from "../../features/activities/details/ActivityDetails";
+import ActivityDetails from "../../features/activities/details/ActivityDetails";
 
 const App = () => {
 

@@ -11,10 +11,11 @@ interface IDetailParams {
 
 export const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({
   match,
+  history
 }) => {
   const activityStore = useContext(ActivityStore);
   const {
-    selectedActivity: activity,
+    selectedActivity,
     openEditForm,
     cancelSelectedActivity,
     loadActivity,
@@ -22,35 +23,35 @@ export const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({
   } = activityStore;
 
   useEffect(() => {
-    loadActivity(match.params.id);
+    loadActivity(match.params.id)
   }, [loadActivity]);
 
-  if (loadingInitial || !activity) return <LoadingComponent content='Loading activity...'/>
+  if (loadingInitial || !selectedActivity) return <LoadingComponent content='Loading activity...'/>
 
   return (
     <Card fluid>
       <Image
-        src={`/assets/categoryImages/${activity!.category}.jpg`}
+        src={`/assets/categoryImages/${selectedActivity!.category}.jpg`}
         wrapped
         ui={false}
       />
       <Card.Content>
-        <Card.Header>{activity!.title}</Card.Header>
+        <Card.Header>{selectedActivity!.title}</Card.Header>
         <Card.Meta>
-          <span>{activity!.date}</span>
+          <span>{selectedActivity!.date}</span>
         </Card.Meta>
-        <Card.Description>{activity!.description}</Card.Description>
+        <Card.Description>{selectedActivity!.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths={2}>
           <Button
-            onClick={() => openEditForm(activity!.id)}
+            onClick={() => openEditForm(selectedActivity!.id)}
             basic
             color="blue"
             content="Edit"
           />
           <Button
-            onClick={cancelSelectedActivity}
+            onClick={() => history.push('/activities')}
             basic
             color="grey"
             content="Cancel"
