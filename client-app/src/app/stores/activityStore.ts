@@ -8,7 +8,7 @@ configure({enforceActions: 'always'});
 class ActivityStore {
     @observable activityRegistry = new Map();
     @observable activities: IActivity[] = [];
-    @observable selectedActivity: IActivity | undefined;
+    @observable selectedActivity: IActivity | null = null;
     @observable loadingInitial = false;
     @observable editMode = false;
     @observable submitting = false; //Индикатор загрузки при нажатии на кнопку
@@ -93,6 +93,10 @@ class ActivityStore {
         }
     }
 
+    @action clearActivity = () => {
+        this.selectedActivity = null;
+    }
+
     @action editActivity = async (activity: IActivity) => {
         this.submitting = true;
         try {
@@ -138,7 +142,7 @@ class ActivityStore {
     }
 
     @action cancelSelectedActivity = () => {
-        this.selectedActivity = undefined;
+        this.selectedActivity = null;
     }
 
     @action cancelOpenForm = () => {
@@ -150,7 +154,7 @@ class ActivityStore {
      */
     @action openCreateForm = () => {
         this.editMode = true;
-        this.selectedActivity = undefined;
+        this.selectedActivity = null;
     }
 
     @action selectActivity = (id: string) => {

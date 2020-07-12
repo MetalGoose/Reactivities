@@ -10,15 +10,20 @@ interface IDetailParams {
   id: string;
 }
 
-export const ActivityForm: React.FC<RouteComponentProps<IDetailParams>> = ({match}) => {
+export const ActivityForm: React.FC<RouteComponentProps<IDetailParams>> = ({
+  match
+  ,history
+}) => {
   const activityStore = useContext(ActivityStore);
-  const {createActivity, editActivity, submitting, cancelOpenForm, selectedActivity, loadActivity} = activityStore;
-
-  useEffect(() => {
-    if (match.params.id) {
-      loadActivity(match.params.id).then(() => selectedActivity && setActivity(selectedActivity)); // Если selectedActivity не undefined => устанавливаем выбранную активность
-    }
-  })
+  const {
+    createActivity,
+    editActivity,
+    submitting,
+    cancelOpenForm,
+    selectedActivity,
+    loadActivity,
+    clearActivity,
+  } = activityStore;
 
   const [activity, setActivity] = useState<IActivity>({
     id: "",
@@ -30,15 +35,27 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailParams>> = ({matc
     venue: "",
   });
 
+  useEffect(() => {
+    if (match.params.id && activity.id.length === 0) {
+      loadActivity(match.params.id).then(() => {
+        selectedActivity && setActivity(selectedActivity);
+      }); // Если selectedActivity не undefined => устанавливаем выбранную активность
+    }
+
+    return () => {
+      clearActivity();
+    };
+  }, [loadActivity, clearActivity, match.params.id, selectedActivity, activity.id.length]);
+
   const handleSubmit = () => {
     if (activity.id.length === 0) {
       let newActivity = {
         ...activity, // Копируем все свойства активности...
         id: uuid(), //... кроме id. Его мы задаем новым значением
       };
-      createActivity(newActivity);
+      createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`));
     } else {
-      editActivity(activity);
+      editActivity(activity).then(() => history.push(`/activities/${activity.id}`));
     }
   };
 
@@ -90,7 +107,13 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailParams>> = ({matc
           placeholder="Venue"
           value={activity.venue}
         />
-        <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
+        <Button
+          loading={submitting}
+          floated="right"
+          positive
+          type="submit"
+          content="Submit"
+        />
         <Button
           onClick={cancelOpenForm}
           floated="right"

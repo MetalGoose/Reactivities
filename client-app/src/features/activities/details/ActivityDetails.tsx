@@ -24,7 +24,7 @@ export const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({
 
   useEffect(() => {
     loadActivity(match.params.id)
-  }, [loadActivity]);
+  }, [loadActivity, match.params.id]);
 
   if (loadingInitial || !selectedActivity) return <LoadingComponent content='Loading activity...'/>
 
