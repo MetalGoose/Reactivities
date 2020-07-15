@@ -16,8 +16,6 @@ export const ActivityDetails: React.FC<RouteComponentProps<IDetailParams>> = ({
   const activityStore = useContext(ActivityStore);
   const {
     selectedActivity,
-    openEditForm,
-    cancelSelectedActivity,
     loadActivity,
     loadingInitial,
   } = activityStore;

@@ -7,10 +7,8 @@ configure({enforceActions: 'always'});
 
 class ActivityStore {
     @observable activityRegistry = new Map();
-    @observable activities: IActivity[] = [];
     @observable selectedActivity: IActivity | null = null;
     @observable loadingInitial = false;
-    @observable editMode = false;
     @observable submitting = false; //Индикатор загрузки при нажатии на кнопку
     @observable target = '';
 
@@ -82,7 +80,6 @@ class ActivityStore {
             await agent.Activities.create(activity);
             runInAction('Create activity',() => {
                 this.activityRegistry.set(activity.id, activity);
-                this.editMode = false;
             });
         } catch (error) {
             console.log(error);
@@ -104,7 +101,6 @@ class ActivityStore {
             runInAction('Edit activity',() => {
                 this.activityRegistry.set(activity.id, activity); // Updating activity by id
                 this.selectedActivity = activity;
-                this.editMode = false;
             });
         } catch (error) {
             console.log(error);
@@ -131,35 +127,6 @@ class ActivityStore {
                 this.target = '';
             });
         }
-    }
-
-     /**
-     * Открываем форму редактирования активности
-     */
-    @action openEditForm = (id: string) => {
-        this.selectedActivity = this.activityRegistry.get(id);
-        this.editMode = true;
-    }
-
-    @action cancelSelectedActivity = () => {
-        this.selectedActivity = null;
-    }
-
-    @action cancelOpenForm = () => {
-        this.editMode = false;
-    }
-
-    /**
-     * Открываем форму создания активности
-     */
-    @action openCreateForm = () => {
-        this.editMode = true;
-        this.selectedActivity = null;
-    }
-
-    @action selectActivity = (id: string) => {
-        this.selectedActivity = this.activityRegistry.get(id);
-        this.editMode = false;
     }
 }
 
