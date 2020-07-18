@@ -12,12 +12,20 @@ class ActivityStore {
     @observable submitting = false; //Индикатор загрузки при нажатии на кнопку
     @observable target = '';
 
-    @computed get activitiesByDate() : IActivity[] {
-        return Array.from(this.activityRegistry.values()).sort(
-            (a, b) => Date.parse(a.date) - Date.parse(b.date)
-        );
+    @computed get activitiesByDate() : [string, IActivity[]][] {
+        return this.getActivitiesByDate(Array.from(this.activityRegistry.values()));
     }
     
+    getActivitiesByDate(activities : IActivity[]) : [string, IActivity[]][] {
+        var sortedActivities = activities.sort(
+            (a, b) => Date.parse(a.date) - Date.parse(b.date)
+        );
+        return Object.entries(sortedActivities.reduce((activities, activity) => {
+            const date = activity.date.split('T')[0];
+            activities[date] = activities[date] ? [...activities[date], activity] : [activity];
+            return activities;
+        }, {} as {[key:string]:  IActivity[]}));
+    };
 
     @action loadActivities = async () => {
         this.loadingInitial = true;

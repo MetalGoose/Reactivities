@@ -16,14 +16,15 @@ export const ActivityDashBoard: React.FC = () => {
    * useEffect Вызывается всякий раз когда компонент рендерится
    * второй параметр (в случае если это пустой массив) для того что бы вызов происходил только один раз - по сути это аналогаично вызову componentDidMount
    */
-
+  
   useEffect(() => {
     activityStore.loadActivities();
   }, [activityStore]);
 
-  if (activityStore.loadingInitial)
+  if (activityStore.loadingInitial) {
     return <LoadingComponent content={"Loading activities..."} />;
-    
+  }
+  
   return (
     <Grid>
       <Grid.Column width={10}>
