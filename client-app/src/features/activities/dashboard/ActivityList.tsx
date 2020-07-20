@@ -13,19 +13,17 @@ export const ActivityList: React.FC = () => {
     <Fragment>
       {activitiesByDate.map(([group, activities]) => (
         <Fragment key={group}>
-          <Label key={group} size='large' color='blue'>
+          <Label key={group} size="large" color="blue">
             {group}
           </Label>
-          <Segment clearing>
-            <Item.Group divided>
-              {activities.map((activity: IActivity) => (
-                <ActivityListItem
-                  key={activity.id}
-                  activity={activity}
-                ></ActivityListItem>
-              ))}
-            </Item.Group>
-          </Segment>
+          <Item.Group divided>
+            {activities.map((activity: IActivity) => (
+              <ActivityListItem
+                key={activity.id}
+                activity={activity}
+              ></ActivityListItem>
+            ))}
+          </Item.Group>
         </Fragment>
       ))}
     </Fragment>
