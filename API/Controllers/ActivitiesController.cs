@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    // ApiController добавляет нам немного магии, самостоятельно отправляя BadRequest, в случае если у нас есть ошибки валидации.
+    // Избавляет нас от необходимости писать примерно следующие блоки в наших методах: 
+    //      if (!ModelState.IsValid)
+    //          return BadRequest(ModelState);
+
     [Route("api/[controller]")]
     [ApiController]
     public class ActivitiesController : ControllerBase
