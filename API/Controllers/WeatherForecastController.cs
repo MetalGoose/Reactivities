@@ -34,7 +34,10 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<Value>>> Get(int id)
         {
             var value = await _context.Values.FindAsync(id);
-            System.Console.WriteLine(value.Id);
+            if (value == null)
+            {
+                return NotFound();
+            }
             return Ok(value);
         }
     }

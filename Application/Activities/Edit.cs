@@ -1,6 +1,8 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -52,7 +54,7 @@ namespace Application.Activities
                 var activity = await _contex.Activities.FindAsync(request.Id);
 
                 if (activity == null)
-                    throw new ApplicationException("Could not find activity");
+                    throw new RestException(HttpStatusCode.NotFound, new {activity = "Not found"});
 
                 //Обновляем значения всех свойств активности если требуется
                 //Рефлексия тут используется просто по фану и для изучения ее работы.
