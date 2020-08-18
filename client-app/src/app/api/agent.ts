@@ -4,11 +4,14 @@
 
 import axios, { AxiosResponse } from 'axios';
 import { IActivity } from '../models/activity';
+import { history } from '../..'; // index.tsx
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 axios.interceptors.response.use(undefined, error => {
-    console.log(error.response);
+    if (error.response.status === 404) {
+        history.push('/notfound');      
+    }
 })
 
 const responceBody = (response: AxiosResponse) => response.data;

@@ -1,18 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router";
+import { createBrowserHistory } from 'history';
 import "./app/layout/styles.css";
 import App from "./app/layout/App";
 import * as serviceWorker from "./serviceWorker";
 import ScrollToTop from "./app/layout/ScrollToTop";
 
+// Мы используем свою history для того, что бы мы могли осуществлять навигацию в agent.tsx
+// Это решает проблему пробрасывания исключения, возникшего в agent.tsx, дальше в компоненты для отображения окна с ошибкой
+export const history = createBrowserHistory();
+
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router history={history}>
       <ScrollToTop>
         <App />
       </ScrollToTop>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
