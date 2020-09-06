@@ -1,3 +1,5 @@
+//#region Imports
+
 import { observer } from "mobx-react-lite";
 import React, { Fragment } from "react";
 import {
@@ -13,10 +15,14 @@ import { HomePage } from "../../features/home/HomePage";
 import NavBar from "../../features/nav/NavBar";
 import ActivityDetails from "../../features/activities/details/ActivityDetails";
 import NotFound from "./NotFound";
+import {ToastContainer} from 'react-toastify';
+
+//#endregion Imports
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   return (
     <Fragment>
+      <ToastContainer position='bottom-right'/>
       <Route exact path="/" component={HomePage} />
       <Route
         path={"/(.+)"}
