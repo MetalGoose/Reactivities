@@ -4,13 +4,18 @@
 
 import axios, { AxiosResponse } from 'axios';
 import { IActivity } from '../models/activity';
-import { history } from '../..'; // index.tsx
+import { history } from '../..'; // index.tsx . Импортируем что бы иметь возможность перенаправлять пользователя (на стра)
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 axios.interceptors.response.use(undefined, error => {
-    if (error.response.status === 404) {
+    const {status, data, config} = error.response;
+    if (status === 404) {
         history.push('/notfound');      
+    }
+    //hasOwnProperty - возвращает логическое значение, указывающее, содержит ли объект указанное свойство
+    if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
+        history.push('/notfound'); 
     }
 })
 
