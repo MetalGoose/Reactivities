@@ -6,7 +6,8 @@ import ActivityStore from "../../../app/stores/activityStore";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
 import { Form as FinalForm, Field } from "react-final-form";
-import TextInput from "../../../app/common/forms/TextInput";
+import { TextInput } from "../../../app/common/forms/TextInput";
+import { TextAreaInput } from "../../../app/common/forms/TextAreaInput";
 
 interface IDetailParams {
   id: string;
@@ -95,10 +96,10 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailParams>> = ({
                   value={activity.title}
                   component={TextInput}
                 />
-                <Form.TextArea
-                  onChange={handleInputChange}
+                <Field
+                  component={TextAreaInput}
                   name="description"
-                  rows={2}
+                  rows={3}
                   placeholder="Description"
                   value={activity.description}
                 />
