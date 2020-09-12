@@ -8,6 +8,8 @@ import { RouteComponentProps } from "react-router-dom";
 import { Form as FinalForm, Field } from "react-final-form";
 import { TextInput } from "../../../app/common/forms/TextInput";
 import { TextAreaInput } from "../../../app/common/forms/TextAreaInput";
+import { SelectInput } from "../../../app/common/forms/SelectInput";
+import { categories } from "../../../app/common/options/categoryOptions";
 
 interface IDetailParams {
   id: string;
@@ -103,8 +105,9 @@ export const ActivityForm: React.FC<RouteComponentProps<IDetailParams>> = ({
                   placeholder="Description"
                   value={activity.description}
                 />
-                <Form.Input
-                  onChange={handleInputChange}
+                <Field
+                  component={SelectInput}
+                  options={categories}
                   name="category"
                   placeholder="Category"
                   value={activity.category}
